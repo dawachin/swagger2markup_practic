@@ -9,7 +9,8 @@ import lombok.Getter;
 public class Member {
 
     @Getter
-    @ApiModelProperty(value = "名前")
+    @ApiModelProperty(value = "名前  " +
+            "メンバーの名前。性と名の間に一文字文の空白を入力してください。")
     private String name;
 
     @Getter
@@ -17,7 +18,11 @@ public class Member {
     private String age;
 
     @Getter
-    @ApiModelProperty(value = "一意のID")
+    @ApiModelProperty(value = "一意のID\n" +
+            "いいいいいいいいいいいいいいい\n" +
+            "いいいいいいいいいいいいいいい\n" +
+            "・ test\n" +
+            "・ test\n")
     private String id;
 
 }

@@ -17,7 +17,11 @@
 
 
 ## gradlew環境(do not need gradle)
+(Macとかの場合先頭に`./`をつける必要があるみたい。)
 
 #### 静的文章を発行する
 
 - ``gradlew asciidoctor``
+
+- ``gradlew clean asciidoctor``
+※すでにファイルがある場合、それを削除して生成。
