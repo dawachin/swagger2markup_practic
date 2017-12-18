@@ -122,6 +122,25 @@ jar {
 }
 
 task releaseSource(type: Zip) {
+    doFirst {
+        // get gradle.bin.zip for offline build.
+        ant.mkdir(dir: "${projectDir}/build/offline")
+        def p = new Properties()
+        p.load(new FileInputStream(new File("${projectDir}/gradle/wrapper/gradle-wrapper.properties")))
+        def gradleUrl = p.get('distributionUrl')
+        //ant.get(src: gradleUrl, dest: "${projectDir}/build/offline")
+
+        // edit properties for offline build.
+        ant.copy(todir: "${projectDir}/build/offline",
+                overwrite: true,
+                preservelastmodified: true) {
+            fileset (file: 'gradle/wrapper/gradle-wrapper.properties')
+        }
+        ant.replaceregexp (file: "${projectDir}/build/offline/gradle-wrapper.properties",
+                match: "(distributionUrl)=.*", flags: 'g',
+                replace: "\\1=../../repository/${gradleUrl.substring(gradleUrl.lastIndexOf('/') + 1, gradleUrl.size())}")
+    }
+
     classifier = 'sources'
     from(projectDir) {
         exclude '.git'
@@ -132,5 +151,13 @@ task releaseSource(type: Zip) {
     }
     into('repository') {
         from configurations.testCompile
+        from("${projectDir}/build/offline") {
+            include '*.zip'
+        }
+    }
+    into('gradle/wrapper') {
+        from "${projectDir}/build/offline/gradle-wrapper.properties"
     }
 }
+
+task wrapper(type:Wrapper)
