@@ -16,8 +16,7 @@
 実行すると、build/distrivutions と　build/offline にjarファイルとpropertiesが生成される。
 
 
-
-## gradlew環境
+## gradlew環境(do not need gradle)
 
 #### 静的文章を発行する
 
